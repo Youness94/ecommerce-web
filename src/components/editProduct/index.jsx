@@ -46,20 +46,28 @@ const EditProduct = (props) => {
       const [imageInput, setImage] =useState([]);
       const [errorlist, setError] =useState([]);
 
-      useEffect(()=> {
-        
-            axios.get(`/api/edit-prodtuct/${id}`).then(res => {
-                  if(res.data.status === 200)
-                  {
-                        setProduct(res.data.products);
-                  }
-                  else if (res.data.status === 404){
-                        swal("Error",res.data.message,"error");
-                        history.push('/admin/view-product');
-                  }
-                  setLoading(false);
-            });
-      }, [id]);
+      useEffect( ()=> {
+        const product_id = props.match.params.id; 
+        const getProducts = async () => {
+          setLoading(true);
+          const res = axios.get(`/api/edit-prodtuct/${product_id}`);
+          // .then(res => {
+            // if(res.data.status === 200)
+            // {
+            //       setProduct(res.data.products);
+            //       console.log(res.data.products)
+            // }
+            // else if (res.data.status === 404){
+            //       swal("Error",res.data.message,"error");
+            //       history.push('/admin/view-product');
+            // }
+            setProduct(res.data.products);
+            setLoading(false);
+            
+      // });
+        }
+        getProducts();
+      }, [props.match.params.id]);
 
       
 
@@ -119,7 +127,7 @@ const handleImage =(e)=> {
 
 const updateProduct = async (e) => {
       e.preventDefault();
-      
+      const product_id = props.match.params.id; 
       
       const formData = new FormData();
       
@@ -132,7 +140,7 @@ const updateProduct = async (e) => {
       formData.append('original_price', productInput.original_price);
       
 
-     await axios.put(`/api/update-product/${id}`, formData).then( res => {
+     await axios.put(`/api/update-product/${product_id}`, formData).then( res => {
         console.log(res)
         if(res.data.status === 200){
 
