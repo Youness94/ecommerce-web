@@ -2,8 +2,14 @@ import React,{useState, useEffect} from 'react'
 import {Link} from 'react-router-dom'
 import axios from 'axios'
 import swal from 'sweetalert'
+import {useSelector, useDispatch} from "react-redux";
+import { getAllSizes } from '../../actions/SizeActions';
+
 
 const ViewSize = () => {
+  const dispatch = useDispatch();
+  const sizes = useSelector((state) => state)
+
       const [loading, setLoading] = useState(true);
       const [sizeList, setSizeList] = useState([]);
 
@@ -11,12 +17,16 @@ const ViewSize = () => {
         axios.get(`api/view-size`).then(res => {
               if(res.status === 200)
               {
-                  setSizeList(res.data.size)
+                  setSizeList(res.data.sizes)
               }
               setLoading(false);
         });
   }, []);
 
+  //     useEffect(()=> {
+  //       dispatch(getAllSizes());
+  // }, [dispatch]);
+ 
   const deleteSize = (e, id) => {
           e.preventDefault();
           const thisClicked = e.currentTarget;
@@ -34,27 +44,27 @@ const ViewSize = () => {
                 }
           });
       }
-      var viewSize_HTMLTABLE = "";
-      if(loading){
-            return <h4>Loading Size...</h4>
-      }
-      else{
-            viewSize_HTMLTABLE= 
-            sizeList.map((item) =>{
-                  return( 
-                        <tr key={item.id}>
-                              <td>{item.id}</td>
-                              <td>{item.type}</td>
-                              <td>
-                                    <a href={`edit-size/${item.id}`} className="btn btn-success btn-sm">Edit</a>
-                              </td>
-                              <td>
-                                    <button type="button" onClick={(e)=>deleteSize(e, item.id)} className="btn btn-danger btn-sm">Delete</button>
-                              </td>
-                        </tr>
-                  )
-            });
-      }
+      // var viewSize_HTMLTABLE = "";
+      // if(loading){
+      //       return <h4>Loading Size...</h4>
+      // }
+      // else{
+      //       viewSize_HTMLTABLE= 
+      //       sizeList.map((item) =>{
+      //             return( 
+      //                   <tr key={item.id}>
+      //                         <td>{item.id}</td>
+      //                         <td>{item.type}</td>
+      //                         <td>
+      //                               <a href={`edit-size/${item.id}`} className="btn btn-success btn-sm">Edit</a>
+      //                         </td>
+      //                         <td>
+      //                               <button type="button" onClick={(e)=>deleteSize(e, item.id)} className="btn btn-danger btn-sm">Delete</button>
+      //                         </td>
+      //                   </tr>
+      //             )
+      //       });
+      // }
 
 
   return (
@@ -105,7 +115,9 @@ const ViewSize = () => {
                       </tr>
                     </thead>
                     <tbody>
-                    {viewSize_HTMLTABLE}
+                    {/* {viewSize_HTMLTABLE} */}
+                    
+                    
                     </tbody>
                   </table>
                 </div>

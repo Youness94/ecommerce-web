@@ -6,7 +6,7 @@ import Products from "./pages/Products";
 import About from "./pages/About";
 // import Navbar from "./layouts/Navbar";
 import Header from "./layouts/Header";
-import Login from "./layouts/Buttons/Login";
+// import Login from "./layouts/Buttons/Login";
 import Contact from "./pages/Contact";
 import ProductDetail from "./components/clientSide/ProductDetail";
 import { BrowserRouter as Router,  Route , Switch} from "react-router-dom";
@@ -19,7 +19,7 @@ axios.defaults.baseURL ='http://localhost:8000'
 // axios.defaults.withCredentials = false;
 // axios.defaults.headers.post['Content-type'] = 'application/jason';
 // axios.defaults.headers.post['Accept'] = 'application/jason';
-// // axios.defaults.headers.post['Content-Type'] ='application/json;charset=utf-8';
+// axios.defaults.headers.post['Content-Type'] ='application/json;charset=utf-8';
 // axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*';
 
 function App() {

@@ -4,11 +4,11 @@ import { combineReducers } from "redux";
 import SizeReducer from './SizeReducer'
 // import bandReducer from './categoryReducer'
 
-
-export  const rootReducer = combineReducers({
+const rootReducer = combineReducers({
       // ProductReducer,
       // CategoryReducer,
-      SizeReducer,
       // BrandReducer,
-
+      sizes : SizeReducer,
 });
+
+export default rootReducer;

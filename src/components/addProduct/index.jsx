@@ -101,7 +101,7 @@ const handleProduct = async (e) => {
       formData.append('original_price', productInput.original_price);
       
 
-     await axios.post(`/api/store-product`, formData).then( res => {
+       await axios.post(`/api/store-product`, formData).then( res => {
         console.log(res)
         if(res.data.status === 200){
 
@@ -129,8 +129,8 @@ const handleProduct = async (e) => {
       .catch(e => {
         //  if(e.data.status === 422){
         //   console.log(e)
-        //   swal("All Fields are mandatory",e.data.message,"error");
-          alert('fhfhfhfhfhfhfhfh')
+          // swal("All Fields are mandatory",e.data.message,"error");
+          alert('All Fields are mandatory')
           
         // }
       });
@@ -263,7 +263,7 @@ const handleProduct = async (e) => {
                   </div>
                   <div className="card-body">
                  <div className="row">
-                  <div className="form-group col-sm-4">
+                  {/* <div className="form-group col-sm-4">
                     <select className="form-control select2bs4" style={{width: '100%'}}  onChange={handleSizeChange} name="type" value={sizeItems.type} >
                       
                       <option>Select Size</option>
@@ -279,7 +279,7 @@ const handleProduct = async (e) => {
                                 })
                               }
                     </select>
-                  </div> 
+                  </div>  */}
         
 
                     <div className="form-group col-sm-3">

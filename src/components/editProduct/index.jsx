@@ -1,22 +1,18 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, } from "react";
 import axios from "axios";
-import { Link, useParams, useHistory } from "react-router-dom";
+import { useHistory, useParams} from "react-router-dom";
 import swal from "sweetalert";
 
 
-
 const EditProduct = (props) => {
+      // const {id} = useParams();
+      // const history = useHistory();
 
-      const history = useHistory();
-      const {id} = useParams;
-      
+      const [loading, setLoading] = useState(true);
 
       const [categorylist, setCategorylist] = useState([]);
       const [brandlist, setBrandlist] = useState([]);
       const [sizeList, setSizeList] = useState([]);
-      const [loading, setLoading] = useState(true);
-
-      // const [poroductList, setProduct] = useState([]);
 
       const [sizeItems, setSizeItems] = useState({
         type:'', 
@@ -24,8 +20,6 @@ const EditProduct = (props) => {
       });
 
       const [size, setSize] = useState([]);
-
-     
 
 
       
@@ -46,65 +40,57 @@ const EditProduct = (props) => {
       const [imageInput, setImage] =useState([]);
       const [errorlist, setError] =useState([]);
 
-      useEffect( ()=> {
-        const product_id = props.match.params.id; 
-        const getProducts = async () => {
-          setLoading(true);
-          const res = axios.get(`/api/edit-prodtuct/${product_id}`);
-          // .then(res => {
-            // if(res.data.status === 200)
-            // {
-            //       setProduct(res.data.products);
-            //       console.log(res.data.products)
-            // }
-            // else if (res.data.status === 404){
-            //       swal("Error",res.data.message,"error");
-            //       history.push('/admin/view-product');
-            // }
-            setProduct(res.data.products);
-            setLoading(false);
-            
-      // });
-        }
-        getProducts();
-      }, [props.match.params.id]);
-
-      
-
 useEffect(()=> {
+  
   axios.get(`/api/all-category`).then(res => {
         if(res.data.status === 200)
         {
          setCategorylist(res.data.category);
-        }
-        
+        }    
   });
-}, []);
-useEffect(()=> {
+
   axios.get(`/api/all-brand`).then(res => {
-        if(res.data.status === 200)
-        {
-         setBrandlist(res.data.brand);
-        }
-        
-  });
-}, []);
-useEffect(()=> {
-  axios.get(`/api/all-size`).then(res => {
-        if(res.data.status === 200)
-        {
-         setSizeList(res.data.size);
-        }
-       
-  });
-}, []);
+      if(res.data.status === 200)
+      {
+       setBrandlist(res.data.brand);
+      }
+    });
 
-
-const handleSizeChange = (e)=>{
-  e.persist();
+    const product_id = props.match.params.id; 
   
-  setSizeItems({...sizeItems, [e.target.name]: e.target.value});
-};
+      const getProduct = async ()=>{
+        const response = await axios.get(`api/edit-product/${product_id}`)
+        .then(res=>{
+          if(res.status===200){
+
+            setProduct(res.data.products)
+               
+                
+          }
+          setLoading(false);
+    })
+      }
+      getProduct()
+
+}, [props.match.params.id,]);
+
+
+// useEffect(()=> {
+//   axios.get(`/api/all-size`).then(res => {
+//         if(res.data.status === 200)
+//         {
+//          setSizeList(res.data.size);
+//         }
+        
+//   });
+// }, []);
+
+
+// const handleSizeChange = (e)=>{
+//   e.persist();
+  
+//   setSizeItems({...sizeItems, [e.target.name]: e.target.value});
+// };
 
 
 const handleAddItem = () => {
@@ -125,10 +111,11 @@ const handleImage =(e)=> {
 }
 
 
-const updateProduct = async (e) => {
+const handleProduct = async (e) => {
       e.preventDefault();
+
       const product_id = props.match.params.id; 
-      
+
       const formData = new FormData();
       
       formData.append('image', imageInput.image);
@@ -140,26 +127,26 @@ const updateProduct = async (e) => {
       formData.append('original_price', productInput.original_price);
       
 
-     await axios.put(`/api/update-product/${product_id}`, formData).then( res => {
+     await axios.post(`/api/update-product/${product_id}`, formData).then( res => {
         console.log(res)
         if(res.data.status === 200){
 
           swal("Success",res.data.message,"success");
-          setProduct({...productInput,
-            category_id:'',
-            brand_id:'',
-            title:'',
-            description:'',
-            image:'',
-            selling_price:'',
-            original_price:'',
+          // setProduct({...productInput,
+          //   category_id:'',
+          //   brand_id:'',
+          //   title:'',
+          //   description:'',
+          //   image:'',
+          //   selling_price:'',
+          //   original_price:'',
 
-            // item:[{
-            //   size_id:'',
-            //   quantity:'',
-            // }],
+          //   // item:[{
+          //   //   size_id:'',
+          //   //   quantity:'',
+          //   // }],
 
-          });
+          // });
           
           
         }
@@ -178,6 +165,7 @@ const updateProduct = async (e) => {
 
    
     };
+
   return (
       <>
       <div className="content-wrapper">
@@ -189,14 +177,14 @@ const updateProduct = async (e) => {
                   </div>
                   <div className="col-sm-6">
                         <ol className="breadcrumb float-sm-right">
-                        <li className="breadcrumb-item"><a href="/admin/view-product">View Product</a></li>
-                        <li className="breadcrumb-item active">Edit product</li>
+                        <li className="breadcrumb-item"><a href="/">Home</a></li>
+                        <li className="breadcrumb-item active">Add Product</li>
                         </ol>
                   </div>
                   </div>
                   </div>
             </section>
-        <form className="content" onSubmit={updateProduct} encType="multipart/form-data" >
+        <form className="content" onSubmit={handleProduct} encType="multipart/form-data" >
           <div className="row">
             <div className="col-md-6">
               <div className="card card-primary">
@@ -302,7 +290,7 @@ const updateProduct = async (e) => {
                   </div>
                   <div className="card-body">
                  <div className="row">
-                  <div className="form-group col-sm-4">
+                  {/* <div className="form-group col-sm-4">
                     <select className="form-control select2bs4" style={{width: '100%'}}  onChange={handleSizeChange} name="type" value={sizeItems.type} >
                       
                       <option>Select Size</option>
@@ -318,16 +306,16 @@ const updateProduct = async (e) => {
                                 })
                               }
                     </select>
-                  </div> 
+                  </div>  */}
         
 
-                    <div className="form-group col-sm-3">
+                    {/* <div className="form-group col-sm-3">
                       <input type="number" className="form-control" placeholder="quantity" value={sizeItems.quantity} onChange={handleSizeChange} name="quantity"/>
-                    </div>
+                    </div> */}
 
-                    <div className="form-group col-sm-2">
+                    {/* <div className="form-group col-sm-2">
                       <button type="button" className="btn-danger btn-sm"><i className="fa fa-trash"></i></button>
-                    </div>
+                    </div> */}
 
                   </div>
                    <button type="button"  onClick={handleAddItem} className="btn btn-primary btn-sm mt-3"><i className="fa fa-plus"></i> Add item</button>
@@ -360,7 +348,7 @@ const updateProduct = async (e) => {
           
             <div className="row">
                   <div className="col-12">
-                  <button type="submit"  className="btn btn-success float-right">Add Product</button>
+                  <button type="submit"  className="btn btn-success float-right">Update Product</button>
                   </div>
             </div>
 

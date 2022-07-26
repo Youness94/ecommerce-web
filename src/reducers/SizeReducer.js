@@ -1,40 +1,47 @@
-import {ADD_SIZE, DELETE_SIZE, UPDATE_SIZE, GET_SIZE, GET_ALL_SIZES} from '../Actions/types'
+import {ALL_SIZES_REQUEST, ALL_SIZES_SUCCESS, ALL_SIZES_FAIL, CLEAR_ERRORS} from '../actions/type'
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
 
-      sizes :[],
+      sizes:[],
+      loading:true,
 };
 
-const SizesReducer = (state =initialState, action)=>{
+
+
+const sizeReducer = (state =initialState, action)=>{
       switch(action.type){
-            case ADD_SIZE:
+            case ALL_SIZES_REQUEST:
             return{
-                  ...state, 
-                  sizes:[...state.sizes,action.payload]
+                  loading:true,
+                  sizes:[]
             }
-            break; 
+          
 
-            case DELETE_SIZE:
+            case ALL_SIZES_SUCCESS:
                   return{
+                        loading:false,
+                        sizes:action.payload.sizes
+                  }
+               
+
+            case ALL_SIZES_FAIL:
+                  return{
+                        loading:false,
+                        error: action.payload,
+                  
+                  }
+
+            case CLEAR_ERRORS:
+                  return{
+
                         ...state,
-                        sizes:state.sizes?state.sizes.filter(item=>item.key!=action.payload):[]
+                        error: null,
                   }
-                  break;
-
-            case GET_SIZE:
-                  return{
-                  ...state,
-                  sizes:action.payload,
-                  }
-                  break;
-
-            case UPDATE_SIZE:
-                  return{
-                  ...state,
-                  sizes:state.map(size=>size.id==action.payload.id? size=size.payload:''),
-                  }
-                  break;
-
+       
+            
+                  
+                 
                   
             
             default:
@@ -43,4 +50,6 @@ const SizesReducer = (state =initialState, action)=>{
             }
 }
 
-export default SizesReducer;
+
+// export default sizeSlice.reducer; 
+export default sizeReducer;

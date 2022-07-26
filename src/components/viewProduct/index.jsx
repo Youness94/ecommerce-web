@@ -5,17 +5,21 @@ import swal from 'sweetalert'
 const ViewProduct = () => {
       const [productList, setProductList] = useState([]);
       const [loading, setLoading] = useState(true);
-      useEffect(()=> {
-            
-            axios.get(`/api/view-product`)
-            .then(res=>{
-                  if(res.status===200){
 
-                        setProductList(res.data.products)
-                        
-                  }
-                  setLoading(false);
-            })
+      useEffect(()=> {
+            const getProduct = async ()=>{
+              const response = await axios.get(`api/view-product`)
+              .then(res=>{
+                if(res.status===200){
+
+                      setProductList(res.data.products)
+                     
+                      
+                }
+                setLoading(false);
+          })
+            }
+            getProduct()
       }, []);
 
       const deleteProduct = (e, id) => {
@@ -77,7 +81,7 @@ const ViewProduct = () => {
                       </div>
                       <div className="col-sm-6">
                         <ol className="breadcrumb float-sm-right">
-                          <li className="breadcrumb-item"><a href="#">Home</a></li>
+                          <li className="breadcrumb-item"><a href="/">Home</a></li>
                           <li className="breadcrumb-item active">Products Tables</li>
                         </ol>
                       </div>

@@ -37,7 +37,7 @@ const routes = [
       
       {path: '/admin/add-product', exact: true, name:'AddProduct', component:AddProduct},
       {path: '/admin/view-product', exact: true, name:'ViewProduct', component:ViewProduct},
-      {path: '/admin/edit-Product/:id', exact: true, name:'EditProduct', component:EditProduct},
+      {path: '/admin/edit-product/:id', exact: true, name:'EditProduct', component:EditProduct},
       
 ];
 

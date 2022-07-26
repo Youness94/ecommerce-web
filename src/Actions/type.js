@@ -6,6 +6,7 @@ export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
 export const GET_PRODUCT = 'GET_PRODUCT';
 export const GET_ALL_PRODUCTS = 'GET_ALL_PRODUCT';
 
+
 // categories actions 
 
 export const ADD_CATEGORY = 'ADD_CATEGORY';
@@ -24,8 +25,13 @@ export const GET_ALL_BRANDS = 'GET_ALL_BRANDS';
 
 // sizes actions 
 
-export const ADD_SIZE = 'ADD_SIZE';
+export const ALL_SIZES_REQUEST = 'ALL_SIZES_REQUEST';
+export const ALL_SIZES_SUCCESS = 'ALL_SIZES_SUCCESS';
+export const ALL_SIZES_FAIL = 'ALL_SIZES_FAIL';
+export const CLEAR_ERRORS = 'CLEAR_ERRORS';
+
+
 export const DELETE_SIZE = 'DELETE_SIZE';
 export const UPDATE_SIZE = 'UPDATE_SIZE';
 export const GET_SIZE = 'GET_SIZE';
-export const GET_ALL_SIZES = 'GET_ALL_SIZES';
+export const SIZES_ERROR = 'SIZES_ERROR';
