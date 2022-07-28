@@ -12,8 +12,8 @@ function Product(props) {
             <img src={props.image} alt="vide" className="card__img"/>
             <div className="card__body">
                   <h3 className="card-title card__title">{props.title}</h3>
-                  <h4 className="lead card__price">{props.price} DH</h4>
-                  <a href={`/products/${props.id}`} className='btn btn-outline-primary' onClick={() => addItem(props.item)}>Buy Now</a>
+                  <h4 className="lead card__price">{props.selling_price} DH</h4>
+                  <a href={`/product/productById/${props.id}`} className='btn btn-outline-primary' onClick={() => addItem(props.item)}>Buy Now</a>
             </div>
     </div>
   )

@@ -1,10 +1,33 @@
-import React from "react";
-// import { useParams } from "react-router-dom";
+import React, { useState, useEffect, } from "react";
+import axios from "axios";
+import { useHistory, useParams} from "react-router-dom";
+import swal from "sweetalert";
 import acier_5 from "../../../img/acier_5.jpg";
 import "./index.css";
 
-const ProductDetail = () => {
+const ProductDetail = (props) => {
   // const productId = useParams();
+  const [loading, setLoading] = useState(true);
+
+  const [productInput, setProductId] = useState([]);
+  
+  useEffect(()=> {
+    const ProductById =  async ()=>{
+      
+    const product_id = props.match.params.id; 
+
+   const response =  await axios.get(`api/productById/${product_id}`)
+    .then(res=>{
+          if(res.status===200){
+
+              setProductId(res.data.products)
+                console.log(res.data.products)
+          }
+          setLoading(false);
+    })
+  }
+  ProductById();
+  }, [props.match.params.id,]);
 
   return (
     <>
@@ -14,26 +37,20 @@ const ProductDetail = () => {
             <img src={acier_5} alt=""  id="image" className="product-image"/>
           </div>
           <div className="col-md-6 col-sm-12 d-flex flex-column justify-content-center">
-            <h1 className="display-5 fw-bold">title</h1>
+            <h1 className="display-5 fw-bold">{productInput.title}</h1>
             <hr />
             {/* <h2 className="my-4">300 DH</h2> */}
             
             <p className="lead">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sit quo
-              sed quod eveniet porro ea recusandae quasi doloribus assumenda
-              rem. Tenetur iusto odit a corrupti in perferendis voluptatum
-              voluptates, maxime ea animi fugit enim esse magnam iure quos quas
-              ipsa soluta officiis dolorem omnis error reprehenderit aut unde?
-              Quae deserunt fugiat, eius adipisci voluptate tempora alias est
-              tenetur voluptas totam!
+              {productInput.description}
             </p>
 
             <div class="bg-gray py-2 px-3 mt-2 my-4">
                 <h2 class="mb-0">
-                  $80.00
+                  {productInput.selling_price}
                 </h2>
                 <h4 class="mt-0">
-                  <small>$105.00 </small>
+                  <small>{productInput.selling_rice}</small>
                 </h4>
             </div>
 

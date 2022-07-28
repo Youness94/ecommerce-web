@@ -6,11 +6,12 @@ import Products from "./pages/Products";
 import About from "./pages/About";
 // import Navbar from "./layouts/Navbar";
 import Header from "./layouts/Header";
-// import Login from "./layouts/Buttons/Login";
 import Contact from "./pages/Contact";
 import ProductDetail from "./components/clientSide/ProductDetail";
 import { BrowserRouter as Router,  Route , Switch} from "react-router-dom";
 import Carts from './pages/Carts/inxdex';
+import Login from './pages/Login';
+import Register from './pages/Register';
 
 
 
@@ -35,7 +36,7 @@ function App() {
           <Products/>
         </Route>
 
-        <Route path="/products:id">
+        <Route path="/product/:id">
           <Header />
           <ProductDetail/>
         </Route>
@@ -61,7 +62,8 @@ function App() {
           <Home/>
         </Route>
               
-        {/* <Route path="/login" component={Login}/> */}
+        <Route path="/login" component={Login}/>
+        <Route path="/register" component={Register}/>
         
         </Switch>
       </Router>
