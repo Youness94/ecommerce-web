@@ -1,9 +1,58 @@
-import React from 'react'
+import React, { useState } from "react";
+import axios from "axios";
+import swal from "sweetalert";
+import { useHistory } from "react-router-dom";
+import AuthUser from '../AuthUser'
 
 const Login = () => {
+
+  const history = useHistory();
+
+  const {http, setToken} = AuthUser();
+
+  const [loginInput, setLogin] = useState({
+    email:"",
+    password:'',
+    error_list: [],
+  });
+
+  const handleChange = (e) => {
+    e.persist();
+    setLogin({ ...loginInput, [e.target.name]: e.target.value });
+  };
+
+  const handleLogin =  (e) => {
+    e.preventDefault();
+    const formData = {
+      email:loginInput.email,
+      password:loginInput.password,
+    }
+    axios.get('/sanctum/csrf-cookie').then(response => {
+          // await 
+          axios.post(`/api/login`, formData).then( res => {    
+            if(res.data.status === 200 ){
+
+              localStorage.setItem('auth_token');
+              localStorage.setItem('auth_name');
+                swal("Success",res.data.message,"success");
+                  history.push('/login')
+                }
+                else if(res.data.status === 401)
+                {
+                  swal("Warning",res.data.message,"warning");
+                }
+                else{
+                  setLogin({...loginInput,error_list : res.data.validation_errors})
+                }
+                  
+                
+                })
+              })  
+      };
+    
   return (
     <>
-     <div className="login-box">
+     <div className="login ">
   {/* /.login-logo */}
   <div className="card card-outline card-primary">
     <div className="card-header text-center">
@@ -11,9 +60,9 @@ const Login = () => {
     </div>
     <div className="card-body">
       <p className="login-box-msg">Sign in to start your session</p>
-      <form action="../../index3.html" method="post">
+      <form action="../../index3.html" method="post" onSubmit={handleLogin}>
         <div className="input-group mb-3">
-          <input type="email" className="form-control" placeholder="Email" />
+          <input type="email" className="form-control" placeholder="Email" name='email'  value={loginInput.email} onChange={handleChange}/>
           <div className="input-group-append">
             <div className="input-group-text">
               <span className="fas fa-envelope" />
@@ -21,7 +70,7 @@ const Login = () => {
           </div>
         </div>
         <div className="input-group mb-3">
-          <input type="password" className="form-control" placeholder="Password" />
+          <input type="password" className="form-control" placeholder="Password" name='password' value={loginInput.password} onChange={handleChange}/>
           <div className="input-group-append">
             <div className="input-group-text">
               <span className="fas fa-lock" />

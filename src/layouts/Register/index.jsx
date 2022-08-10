@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
 import swal from "sweetalert";
+import { useHistory } from "react-router-dom";
+import './register.css'
 
 const Register = () => {
+
+  const history = useHistory();
 
       const [registerInput, setRegister] = useState({
             
@@ -17,33 +21,34 @@ const Register = () => {
             setRegister({ ...registerInput, [e.target.name]: e.target.value });
           };
 
-          const handleUser = async (e) => {
+          const handleUser =  (e) => {
             e.preventDefault();
             const formData = new FormData();
                   formData.append('name', registerInput.name);
                   formData.append('email', registerInput.email);
                   formData.append('password', registerInput.password);
-                  await axios.post(`/api/register`, formData).then( res => {
-                        if(res.data.status === 201){
-            
-                              swal("Success",res.data.message,"success");
-                              setRegister({...registerInput,
+                  
+
+                  axios.get('/sanctum/csrf-cookie').then(response => {
+                  // awaitx
+                   axios.post(`/api/register`, formData).then( res => {
+                    if(res.data.status === 200 ){
+
+                          localStorage.setItem('auth_token', res.data.token);
+                          localStorage.setItem('auth_name', res.data.username);
+                            swal("Success",res.data.message,"success");
+                            setRegister({...registerInput,
                                     name:"",
                                     email:"",
                                     password:'',
             
                               });
-
-                        }
-                        }).catch(e => {
-                              //  if(e.data.status === 422){
-                              //   console.log(e)
-                                // swal("All Fields are mandatory",e.data.message,"error");
-                                alert('All Fields are mandatory')
-                                
-                              // }
-                            });
-                        
+                              history.push('/login')
+                    }else{
+                      setRegister({...registerInput,error_list : res.data.validation_errors})
+                    }
+                        })
+                      })    
               };
             
                   
@@ -53,11 +58,11 @@ const Register = () => {
      <div className="register-box">
   <div className="card card-outline card-primary">
     <div className="card-header text-center">
-      <a href="../../index2.html" className="h1"><b>Admin</b>LTE</a>
+      <a  className="h1"><b>Admin</b>LTE</a>
     </div>
     <div className="card-body">
       <p className="login-box-msg">Register a new membership</p>
-      <form action="../../index.html" method="post" onSubmit={handleUser}>
+      <form  method="post" onSubmit={handleUser}>
         <div className="input-group mb-3">
           <input type="text" className="form-control" placeholder="Full name" name='name' value={registerInput.name} onChange={handleChange}/>
           <div className="input-group-append">

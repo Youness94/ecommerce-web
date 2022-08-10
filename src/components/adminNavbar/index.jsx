@@ -1,6 +1,25 @@
-import React from 'react'
+import React, { useState } from "react";
+import axios from "axios";
+import swal from "sweetalert";
+import { useHistory } from "react-router-dom";
+
 
 const AdminNavbar = () => {
+
+  const history = useHistory();
+
+  const logoutSubmit = (e) =>{
+    e.preventDefault();
+    axios.post(`/api/logout`).then( res => {
+      if (res.status === 200){
+              localStorage.removeItem('auth_token', res.data.token);
+              localStorage.removeItem('auth_name', res.data.username);
+                swal("Success",res.data.message,"success");
+                  history.push('/login')
+      }
+    });
+  }
+
   return (
     <div>
        {/* Navbar */}
@@ -125,6 +144,11 @@ const AdminNavbar = () => {
         <a href="#" className="dropdown-item dropdown-footer">See All Notifications</a>
       </div>
     </li>
+    {/* logout */}
+    <li className="nav-item">
+      <button type='button' className='nav-link btn btn-danger btn-sm text-white' onSubmit={logoutSubmit}>logout</button>
+    </li>
+    {/* logout */}
     <li className="nav-item">
       <a className="nav-link" data-widget="fullscreen" href="#" role="button">
         <i className="fas fa-expand-arrows-alt" />

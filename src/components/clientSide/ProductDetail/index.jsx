@@ -14,9 +14,9 @@ const ProductDetail = (props) => {
   useEffect(()=> {
     const ProductById =  async ()=>{
       
-    const product_id = props.match.params.id; 
+    const id = props.match.params.id; 
 
-   const response =  await axios.get(`api/productById/${product_id}`)
+   const response =  await axios.get(`api/productById/${id}`)
     .then(res=>{
           if(res.status===200){
 
