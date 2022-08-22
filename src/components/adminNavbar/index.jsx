@@ -8,12 +8,12 @@ const AdminNavbar = () => {
 
   const history = useHistory();
 
-  const logoutSubmit = (e) =>{
+  const logoutSubmit = async (e) =>{
     e.preventDefault();
-    axios.post(`/api/logout`).then( res => {
+   await axios.post(`/api/logout`).then( res => {
       if (res.status === 200){
-              localStorage.removeItem('auth_token', res.data.token);
-              localStorage.removeItem('auth_name', res.data.username);
+              localStorage.removeItem('auth_token');
+              localStorage.removeItem('auth_name');
                 swal("Success",res.data.message,"success");
                   history.push('/login')
       }
@@ -146,7 +146,7 @@ const AdminNavbar = () => {
     </li>
     {/* logout */}
     <li className="nav-item">
-      <button type='button' className='nav-link btn btn-danger btn-sm text-white' onSubmit={logoutSubmit}>logout</button>
+      <button type='button' className='nav-link btn btn-danger btn-sm text-white' onClick={logoutSubmit}>logout</button>
     </li>
     {/* logout */}
     <li className="nav-item">

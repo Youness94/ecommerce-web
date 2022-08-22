@@ -1,18 +1,30 @@
 import React from 'react'
 import Carousel from '../../components/clientSide/Carousel'
+import CategoriesList from '../../components/clientSide/CategoriesList'
 import NewsLatter from '../../components/clientSide/NewsLatter'
+import Header from '../../layouts/Header'
+import Navbar from '../../layouts/Navbar'
+import './home.css'
+
+
+
 
 const Home = () => {
   return (
-    <>
-      <Carousel/>
-      <div>
-
+    <div className='home_page'>
+      
+      <div className=''>
+        <Navbar/>
+        {/* <Header/> */}
       </div>
-      <div>
+      
+      <div className=''>
+        <Carousel/>
+        <CategoriesList/>
         <NewsLatter/>
       </div>
-    </>
+
+    </div>
   )
 }
 

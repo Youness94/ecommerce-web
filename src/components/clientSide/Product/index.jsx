@@ -13,7 +13,12 @@ function Product(props) {
             <div className="card__body">
                   <h3 className="card-title card__title">{props.title}</h3>
                   <h4 className="lead card__price">{props.selling_price} DH</h4>
-                  <a href={`/product/productById/${props.id}`} className='btn btn-outline-primary' onClick={() => addItem(props.item)}>Buy Now</a>
+                  <button 
+                  // href={`/product/productById/${props.id}`} 
+                  onClick={() => addItem(props.item)}
+                  className='btn btn-outline-primary' 
+                  >Add to Cart
+                  </button>
             </div>
     </div>
   )

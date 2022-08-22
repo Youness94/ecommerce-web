@@ -1,14 +1,53 @@
-*,*::after, ::before{
-      margin:0;
-      box-sizing: border-box;
+.muiTabLink{
+      text-decoration: none !important;
+      color: inherit ;
+      margin-left: 30px;
+}
+
+.muiTabLink :hover{
+      text-decoration: none !important;
+      color: black ;
+      border-bottom: 3px solid black;
+}
+.muiLinkIcon{
+      text-decoration: none !important;
+      color: inherit  ;
+      margin-left: 30px;
+}
+.muiLinkIcon :hover{
+      text-decoration: none !important;
+      color: black ;
+     
 } 
-/* html{
-      font-size: 62.5%;
-} */
-/* body{
-      font-size: 1.6rem;
-} */
-.nav__item{
+.navbarmui{
+      padding: 15px 0 15px 0 !important;   
+}
+.muiTabs{
+      display: flex;
+      align-items: flex-end;
+      align-self: center;
+      justify-content: flex-end;
+      margin-left: 55%;
+      color: inherit;
+
+}
+
+.muiDrawerLink{
+      text-decoration: none !important;
+      color: inherit ;
+      display: flex;
+     flex-direction: column;
+     padding:15px 40px 15px 20px;
+     margin: 10px 20px 0px 10px;
+}
+
+
+
+
+
+
+
+/* .nav__item{
       list-style: none;
 }
 a{
@@ -59,17 +98,17 @@ a{
             transform: translateX(100%);
             transition: 0.5s ease-in;
       }
-}
+}  */
 
 /* nav active class  */
 
-.nav__active{
+/* .nav__active{
       transform: translateX(0);
-}
+} */
 
 /* toggler icon animation  */
 
-.toggle .line1{
+ /* .toggle .line1{
       transform: rotate(-45deg) translate(-4px, 5px);
 }
 .toggle .line2{
@@ -77,4 +116,4 @@ a{
 }
 .toggle .line3{
       transform: rotate(45deg) translate(-4px, -5px);
-}
+} */

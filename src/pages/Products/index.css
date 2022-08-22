@@ -11,3 +11,6 @@
             grid-template-columns: repeat(auto-fit, minmax(14rem, 16rem));
       }  
 } */
+.product_list{
+      padding-top: 100px;
+}

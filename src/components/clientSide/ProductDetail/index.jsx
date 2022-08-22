@@ -4,8 +4,10 @@ import { useHistory, useParams} from "react-router-dom";
 import swal from "sweetalert";
 import acier_5 from "../../../img/acier_5.jpg";
 import "./index.css";
+import { useCart } from "react-use-cart";
 
 const ProductDetail = (props) => {
+  const { addItem } = useCart();
   // const productId = useParams();
   const [loading, setLoading] = useState(true);
 
@@ -89,7 +91,7 @@ const ProductDetail = (props) => {
             {/* <button className="btn btn-outline-primary my-5">Add to cart</button> */}
             <div class="mt-3">
                 <button class="btn btn-outline-primary btn-lg btn-flat my-3 mr-2">
-                  <i class="fas fa-cart-plus fa-lg mr-2"></i>
+                  <i class="fas fa-cart-plus fa-lg mr-2" onClick={() => addItem(props.item)}></i>
                   Add to Cart
                 </button>
 

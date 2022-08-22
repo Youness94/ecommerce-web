@@ -9,12 +9,13 @@ import Header from "./layouts/Header";
 import Contact from "./pages/Contact";
 import ProductDetail from "./components/clientSide/ProductDetail";
 import { BrowserRouter as Router,  Route , Switch, Redirect} from "react-router-dom";
-import Carts from './pages/Carts/inxdex';
+import Carts from './pages/Checkout';
 import Login from './layouts/Login';
 import Register from './layouts/Register';
 
 import AdminPrivteRoute from './AdminPrivteRoute'
-
+import Navbar from './layouts/Navbar';
+import './App.css'
 
 
 axios.defaults.baseURL ='http://localhost:8000/';
@@ -35,45 +36,46 @@ function App() {
     <div className="App">
       <CartProvider>
       <Router>
-      <AdminPrivteRoute path="/admin" name='Admin' />
-      <Route path="/login">
-          {localStorage.getItem('auth_token') ? <Redirect to='/' /> : <Login/>}
+      
+      
+        <Switch>
+
+        <Route path="/login">
+          {localStorage.getItem('auth_token') ? <Redirect to='/admin/dashboard' /> : <Login/>}
         </Route>
         <Route path="/register">
-        {localStorage.getItem('auth_token') ? <Redirect to='/' /> : <Register/>}
+        {localStorage.getItem('auth_token') ? <Redirect to='/login' /> : <Register/>}
         </Route>
-        
-        <Switch>
-        
+        <AdminPrivteRoute path="/admin" name='Admin' />
 
         <Route path="/products">
-          <Header />
+        <Navbar/>
           <Products/>
         </Route>
 
         <Route exact path="/product/:id">
-          <Header />
+          <Navbar/>
           <ProductDetail/>
         </Route>
 
-        <Route path="/checkout">
-            
-            <Header />
-            <Carts />
-          </Route>
+        <Route exact path="/checkout">
+            <Navbar/>
+            <Carts/>
+        </Route>
 
         <Route exact path="/about">
-          <Header />
+        <Navbar/>
           <About/>
         </Route>
         
         <Route exact path="/contact">
-          <Header />
+        <Navbar/>
           <Contact/>
         </Route>
 
         <Route exact path="/">
-        <Header/>
+        {/* <Header/> */}
+        {/* <Navbar/> */}
           <Home/>
         </Route>
 

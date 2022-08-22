@@ -32,10 +32,10 @@ const Login = () => {
           axios.post(`/api/login`, formData).then( res => {    
             if(res.data.status === 200 ){
 
-              localStorage.setItem('auth_token');
-              localStorage.setItem('auth_name');
+              localStorage.setItem('auth_token', res.data.token);
+              localStorage.setItem('auth_name', res.data.username);
                 swal("Success",res.data.message,"success");
-                  history.push('/login')
+                  history.push('/admin/dashboard')
                 }
                 else if(res.data.status === 401)
                 {
